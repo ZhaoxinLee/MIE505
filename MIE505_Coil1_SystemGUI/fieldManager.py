@@ -19,8 +19,8 @@ class FieldManager(object):
         self.dac.set_pin_to_write_mode(self.pinXdir)
         self.dac.set_pin_to_write_mode(self.pinYdir)
         self.dac.set_pin_to_write_mode(self.pinZdir)
-        # Coil analog output conversion factors determined from coil
-        # calibration.
+        # Coil analog output conversion factors determined from coil calibration.
+        # (NOT VALID ANYMORE SINCE WE ARE USING POLYNOMIAL FITTING CURVE)
         self.aoFactorX = 0.746 #[mT/V]
         self.aoFactorY = 1.190 #[mT/V]
         self.aoFactorZ = 2.038 #[mT/V]
@@ -34,9 +34,9 @@ class FieldManager(object):
         self.freqCutoffY = 17.9 #[Hz]
         self.freqCutoffZ = 28.7 #[Hz]
         # Power supply voltage
-        self.VsupplyX = 24.14 #[V]
-        self.VsupplyY = 24.12 #[V]
-        self.VsupplyZ = 24.15 #[V]
+        self.VsupplyX = 24.16 #[V]
+        self.VsupplyY = 24.14 #[V]
+        self.VsupplyZ = 24.12 #[V]
         # Initial requested field values
         self.bxSetpoint = 0 #[mT]
         self.bySetpoint = 0 #[mT]
@@ -60,7 +60,10 @@ class FieldManager(object):
         # that is amplified by a motor driver. The duty cycle of the PWM
         # output is determined based on the desired voltage and the
         # supply voltage.
-        self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, mT / self.aoFactorX, self.VsupplyX)
+        if mT>=0:
+            self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, 0.0104*(mT**3)-0.0887*(mT**2)+1.5415*mT , self.VsupplyX)
+        else:
+            self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, 0.0104*(mT**3)+0.0887*(mT**2)+1.5415*mT , self.VsupplyX)
         self.bxSetpoint = mT
 
     def setY(self, mT):
@@ -70,7 +73,10 @@ class FieldManager(object):
         # that is amplified by a motor driver. The duty cycle of the PWM
         # output is determined based on the desired voltage and the
         # supply voltage.
-        self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, mT / self.aoFactorY, self.VsupplyY)
+        if mT>=0:
+            self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, 0.0056*(mT**3)-0.0565*(mT**2)+1.0064*mT , self.VsupplyY)
+        else:
+            self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, 0.0056*(mT**3)+0.0565*(mT**2)+1.0064*mT  , self.VsupplyY)
         self.bySetpoint = mT
 
     def setZ(self, mT):
@@ -80,7 +86,10 @@ class FieldManager(object):
         # that is amplified by a motor driver. The duty cycle of the PWM
         # output is determined based on the desired voltage and the
         # supply voltage.
-        self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, mT / self.aoFactorZ, self.VsupplyZ)
+        if mT>=0:
+            self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, 0.0014*(mT**3)-0.0178*(mT**2)+0.571*mT , self.VsupplyZ)
+        else:
+            self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, 0.0014*(mT**3)+0.0178*(mT**2)+0.571*mT , self.VsupplyZ)
         self.bzSetpoint = mT
 
     def setXYZ(self, x_mT, y_mT, z_mT):
