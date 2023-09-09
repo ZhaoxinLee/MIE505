@@ -82,10 +82,10 @@
        <item row="0" column="2">
         <widget class="QDoubleSpinBox" name="dsb_x">
          <property name="minimum">
-          <double>-8.699999999999999</double>
+          <double>-8.500000000000000</double>
          </property>
          <property name="maximum">
-          <double>8.699999999999999</double>
+          <double>8.500000000000000</double>
          </property>
         </widget>
        </item>
@@ -118,10 +118,10 @@
        <item row="1" column="2">
         <widget class="QDoubleSpinBox" name="dsb_y">
          <property name="minimum">
-          <double>-10.500000000000000</double>
+          <double>-10.100000000000000</double>
          </property>
          <property name="maximum">
-          <double>10.500000000000000</double>
+          <double>10.100000000000000</double>
          </property>
         </widget>
        </item>
