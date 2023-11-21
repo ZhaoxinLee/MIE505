@@ -40,6 +40,9 @@ class Vision(object):
         # text editor
         self.filterRouting = []
         self.snapIndex = 0 #index for image saving
+        
+        self.agent1 = Agent()
+        self.agent2 = Agent()
 
         # drawings
         # data structure: {"drawingName", "args"}, defined in Subthread

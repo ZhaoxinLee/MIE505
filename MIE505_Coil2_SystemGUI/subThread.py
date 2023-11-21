@@ -105,9 +105,9 @@ class SubThread(QThread):
             'twistField':[0, 0, 0, 0, 0],
             'drawing':[0, 0, 0, 1, 0],
             'swimmerPathFollowing':[-20, 2, 0, 0, 0],
-            'swimmerPathFollowing505':[20, 6, 0, 0, 0],
-            'swimmerWaypointFollowing505':[20, 6, 0, 0, 0],
-            'swimmerBenchmark505':[20, 6, 0, 0, 0],
+            'swimmerPathFollowing505':[20, 5, 0, 0, 0],
+            'swimmerWaypointFollowing505':[20, 5, 0, 0, 0],
+            'swimmerBenchmark505':[20, 5, 0, 0, 0],
             'tianqiGripper':[0, 15, 0.5, 0, 0],
             'default':[0, 0, 0, 0, 0]
             }
@@ -581,8 +581,8 @@ class SubThread(QThread):
         # reference params
         # NONE
         #=============================
-        freq = 24 #[Hz]
-        fieldAmplitudeAC = 6 #[mT]
+        freq = 20 #[Hz]
+        fieldAmplitudeAC = 5 #[mT]
         # Compensate for increased impedance at higher frequencies (more voltage
         # is needed to achieve the same current)
         impedanceCompensationFactorX = impedanceCompensationFirstOrder(freq, self.field.freqCutoffX)
@@ -684,9 +684,9 @@ class SubThread(QThread):
             self.field.setY(bDCy + impedanceCompensationFactorY * bACy)
             self.field.setZ(impedanceCompensationFactorZ * bACz)
             if self.stopped:
+                angleSwimOffset = atan2(y-startY, x-startX)
+                print(f'Measured Swimming Offset Angle: {np.degrees(angleSwimOffset):.1f} deg')
                 return
-        angleSwimOffset = atan2(y-startY, x-startX)
-        print(f'Measured Swimming Offset Angle: {np.degrees(angleSwimOffset):.1f} deg')
     
     def tianqiGripper(self):
         #=============================
