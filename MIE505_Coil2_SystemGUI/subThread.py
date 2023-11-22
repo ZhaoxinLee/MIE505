@@ -609,7 +609,7 @@ class SubThread(QThread):
         n = 0
         while t < 5.0:
             # Set the field to be 10 mT in the X direction only
-            self.field.setXYZ(10.0, 0.0, 0.0)
+            self.field.setXYZ(5.0, 0.0, 0.0)
             t = time.time()-startTime
             if t > 1.0:
                 # Take a running sum of the heading of the robot
