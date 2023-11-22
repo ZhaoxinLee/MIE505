@@ -45,6 +45,8 @@ class Vision(object):
         # data structure: {"drawingName", "args"}, defined in Subthread
         self.drawingRouting = []
         
+        self.agent1 = Agent()
+        
         self.screenWidth = 1000 #width of screen in mm. Initialize to a large number
 
         # video writing
